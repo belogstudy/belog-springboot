@@ -3,6 +3,9 @@ package com.velog.velogproject.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * API 명세(swagger)를 위한 View 연결 구현
+ */
 @Controller
 public class MainController {
 
