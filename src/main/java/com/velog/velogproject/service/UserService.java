@@ -16,6 +16,12 @@ public interface UserService {
      */
     LoginResponseDTO login(String email, String password);
 
+    /**
+     * 사용자 회원가입 서비스
+     * @param email : 사용할 이메일
+     * @param password : 사용할 패스워드
+     * @return RegisterResponseDTO
+     */
     RegisterResponseDTO register(String email, String password);
 
 
