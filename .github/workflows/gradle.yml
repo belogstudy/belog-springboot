@@ -34,6 +34,6 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         password: ${{ secrets.SSH_PASSWORD }}  # Secrets에 저장된 SSH 패스워드 사용
         script: |
-          # Deploy.sh 스크립트 실행
+          # deploy.sh 스크립트 실행
           cd ~
-          ./Deploy.sh
+          ./deploy.sh
