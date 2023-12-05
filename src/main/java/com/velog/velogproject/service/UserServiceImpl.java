@@ -41,11 +41,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public RegisterResponseDTO register(String email, String password) {
-        // 이메일과 패스워드를 사용하여 새로운 사용자 생성
+    public RegisterResponseDTO register(String email, String password, String profileName, String profile) {
+        // 새로운 사용자 생성
         UserInfoEntity newUser = UserInfoEntity.createBuilder()
                 .email(email)
                 .password(password)
+                .profileName(profileName)
+                .profile(profile)
                 .createAt(LocalDateTime.now()) // 현재 시간을 넣음.
                 .build();
 
