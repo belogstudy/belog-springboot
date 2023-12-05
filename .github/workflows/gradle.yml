@@ -30,6 +30,7 @@ jobs:
       uses: appleboy/ssh-action@master
       with:
         host: diligentp.com
+        port: ${{ secrets.SSH_PORT }}
         username: ${{ secrets.SSH_USERNAME }}
         password: ${{ secrets.SSH_PASSWORD }}  # Secrets에 저장된 SSH 패스워드 사용
         script: |
