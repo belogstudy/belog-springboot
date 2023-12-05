@@ -37,9 +37,11 @@ public class UserInfoEntity {
     private String likePosts;
 
     @Builder(builderClassName = "CreateBuilder", builderMethodName = "createBuilder")
-    public UserInfoEntity(String email, String password, LocalDateTime createAt) {
+    public UserInfoEntity(String email, String password, String profileName, String profile, LocalDateTime createAt) {
         this.email = email;
         this.password = password;
+        this.profileName = profileName;
+        this.profile = profile;
         this.createAt = createAt;
     }
 

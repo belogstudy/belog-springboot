@@ -47,7 +47,7 @@ public class UserController {
     /**
      * 회원가입 API
      * @설명: 사용자의 이메일과 패스워드를 받아 회원가입을 처리합니다.
-     * @Request: RegisterRequestDTO (String email, String password)
+     * @Request: RegisterRequestDTO (이메일, 패스워드, 프로필이름, 프로필소개(한줄소개))
      * @Response: RegisterResponseDTO
      */
     @PostMapping("/register")
@@ -55,10 +55,12 @@ public class UserController {
         // 클라이언트로부터 전달받은 이메일과 패스워드
         String email = registerRequestDTO.getEmail();
         String password = registerRequestDTO.getPassword();
-        log.info("회원가입 요청 : Email: {}, Password: {}",email, password);
+        String profileName = registerRequestDTO.getProfileName();
+        String profile = registerRequestDTO.getProfile();
+        log.info("회원가입 요청 : Email: {}, Password: {}, ProfileName: {}, Profile: {}",email, password, profileName, profile );
 
         // 회원 가입 서비스 호출
-        RegisterResponseDTO responseDTO = userService.register(email, password);
+        RegisterResponseDTO responseDTO = userService.register(email, password, profileName, profile);
 
         // 회원 가입 성공 시 200 OK와 응답 데이터 반환
         if (responseDTO != null && responseDTO.getUserId() != null) {
