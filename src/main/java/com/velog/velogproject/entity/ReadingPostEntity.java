@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Table(name = "readingPost")
 public class ReadingPostEntity {
     @Id
-    private Long id;
+    private Long Id;
     private LocalDateTime createdAt;
     private LocalDateTime updateAt;
     @ManyToOne

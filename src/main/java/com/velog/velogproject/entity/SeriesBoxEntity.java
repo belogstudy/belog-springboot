@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "seriesBox")
 public class SeriesBoxEntity {
     @Id
-    private Long id;
+    private Long Id;
     private String title;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

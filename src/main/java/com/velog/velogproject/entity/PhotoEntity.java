@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Table(name = "photo")
 public class PhotoEntity {
     @Id
-    private Long id;
+    private Long Id;
 
     private String src;
     private LocalDateTime createdAt;

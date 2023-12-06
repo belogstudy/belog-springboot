@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
 /**
  * Velog의 Post 테이블을 매핑하는 Entity 클래스 입니다.
  * */
@@ -16,7 +15,7 @@ import java.util.List;
 @Table(name = "post")
 public class PostEntity {
     @Id
-    private Long id;
+    private Long Id;
 
     private String title;
     private String contents;
