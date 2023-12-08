@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 public class UserInfoEntity {
 
     // 사용자 계정
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
@@ -61,4 +62,9 @@ public class UserInfoEntity {
         this.snsMail = snsMail;
         this.likePosts = likePosts;
     }
+
+    public UserInfoEntity(Long userId) {
+        this.userId = userId;
+    }
+
 }

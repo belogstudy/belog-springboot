@@ -1,9 +1,6 @@
 package com.velog.velogproject.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
@@ -14,6 +11,7 @@ import java.time.LocalDateTime;
 @Table(name = "comment")
 public class CommentEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private LocalDateTime createdAt;

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "hashTag")
 public class HashTagEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String tagName;
 
