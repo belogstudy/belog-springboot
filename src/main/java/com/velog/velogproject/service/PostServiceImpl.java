@@ -24,11 +24,8 @@ public class PostServiceImpl implements PostService{
         // DB에서 PostId에 해당하는 글을 가져옵니다.
         Optional<PostEntity> entityOptional = postRepository.findById(postId);
 
-        // 만약 해당 postId에 대한 글이 없다면 null을 반환하거나 예외를 처리하는 등의 로직을 추가할 수 있습니다.
-        if (entityOptional.isEmpty()) {
-            // 예외 처리 또는 원하는 로직을 추가하세요.
-            return null;
-        }
+        // 만약 해당 postId에 대한 글이 없다면 null을 반환하거나 예외를 처리
+        // TODO: 예외 처리
 
         // DB에서 가져온 PostEntity를 PostResponseDTO.Info로 변환하여 반환합니다.
         PostEntity postEntity = entityOptional.get();
