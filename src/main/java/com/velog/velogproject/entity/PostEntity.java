@@ -2,21 +2,23 @@ package com.velog.velogproject.entity;
 
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-
 /**
  * Velog의 Post 테이블을 매핑하는 Entity 클래스 입니다.
  * */
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor @Getter
 @Table(name = "post")
 public class PostEntity {
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
 
     private String title;
     private String contents;
@@ -24,6 +26,7 @@ public class PostEntity {
     private Boolean publicStatus;
     private String description;
 
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private int likes;
@@ -40,4 +43,30 @@ public class PostEntity {
     private List<HashTagEntity> hashTags;
     @OneToMany(mappedBy = "postId",cascade = CascadeType.ALL)
     private List<PhotoEntity> photos;
+
+    @Builder(builderClassName = "CreateBuilder", builderMethodName = "createBuilder")
+    public PostEntity(String title, String contents, Boolean publicStatus, LocalDateTime createdAt, LocalDateTime updatedAt, int likes, UserInfoEntity userId) {
+        this.title = title;
+        this.contents = contents;
+        this.publicStatus = publicStatus;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.likes = likes;
+        this.userId = userId;
+    }
+
+    @Builder(builderClassName = "UpdateBuilder", builderMethodName = "updateBuilder")
+    public PostEntity(Long id, String title, String contents, Boolean publicStatus, LocalDateTime updatedAt, UserInfoEntity userId) {
+        Id = id;
+        this.title = title;
+        this.contents = contents;
+        this.publicStatus = publicStatus;
+        this.updatedAt = updatedAt;
+        this.userId = userId;
+    }
+
+    @Builder(builderClassName = "DeleteBuilder", builderMethodName = "deleteBuilder")
+    public PostEntity(Long id) {
+        Id = id;
+    }
 }

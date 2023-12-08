@@ -34,14 +34,14 @@ public class UserController {
         String password = loginRequest.getPassword();
 
         log.info("로그인 요청 : Email: {}, Password: {}",email, password);
-        LoginResponseDTO responseDTO = userService.login(email,password); // 서비스에 로그인 요청을 보냄
+            LoginResponseDTO responseDTO = userService.login(email,password); // 서비스에 로그인 요청을 보냄
 
-        if(responseDTO != null && responseDTO.getUserId() != null) {
-            log.info("로그인 성공 : Email: {}", email);
-            return ResponseEntity.ok(responseDTO);
-        }else {
-            log.warn("로그인 실패 : 사용자의 입력이 잘못 되었습니다.");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseDTO);
+            if(responseDTO != null && responseDTO.getUserId() != null) {
+                log.info("로그인 성공 : Email: {}", email);
+                return ResponseEntity.ok(responseDTO);
+            }else {
+                log.warn("로그인 실패 : 사용자의 입력이 잘못 되었습니다.");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseDTO);
         }
     }
     /**

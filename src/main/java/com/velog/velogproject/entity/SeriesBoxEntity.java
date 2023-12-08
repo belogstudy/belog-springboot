@@ -11,7 +11,8 @@ import java.util.List;
 @Table(name = "seriesBox")
 public class SeriesBoxEntity {
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
     private String title;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

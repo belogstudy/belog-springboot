@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Table(name = "likePost")
 public class LikePostEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDateTime createdAt;
     private LocalDateTime updateAt;

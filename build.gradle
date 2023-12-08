@@ -23,14 +23,24 @@ repositories {
 }
 
 dependencies {
+	// SpringBoost Starter
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.mysql:mysql-connector-j'
-	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0' // Swagger
+	// Lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// Mysql
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	// Swagger
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+
+	// MapStruct
+	implementation("org.mapstruct:mapstruct:1.5.3.Final")
+	annotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
 }
 
 tasks.named('bootBuildImage') {
