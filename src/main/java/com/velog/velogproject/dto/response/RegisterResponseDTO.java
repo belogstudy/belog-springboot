@@ -11,5 +11,5 @@ public class RegisterResponseDTO {
     private Long userId;
     private String email;
 
-    private String errorMessage;
+    private String Message;
 }

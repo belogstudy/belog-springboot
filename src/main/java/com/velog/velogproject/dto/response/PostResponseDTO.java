@@ -21,6 +21,7 @@ public class PostResponseDTO {
         private Long postId;
 
         private String title;
+        private String subTitle;
         private String contents;
         private String url;
         private Boolean publicStatus;

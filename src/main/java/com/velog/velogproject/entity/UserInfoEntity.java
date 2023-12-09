@@ -67,4 +67,9 @@ public class UserInfoEntity {
         this.userId = userId;
     }
 
+    public Long getId() {
+        return this.userId;
+    }
+
+
 }

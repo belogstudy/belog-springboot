@@ -2,11 +2,15 @@ package com.velog.velogproject.controller;
 
 import com.velog.velogproject.dto.request.PostRequestDTO;
 import com.velog.velogproject.dto.response.PostResponseDTO;
+import com.velog.velogproject.entity.PostEntity;
+import com.velog.velogproject.repository.PostRepository;
 import com.velog.velogproject.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 게시클(포스트) 관련 RestAPI Controller 구현
@@ -31,6 +35,7 @@ public class PostController {
         PostResponseDTO.Info post = postService.getPostByPostId(postId);
         return ResponseEntity.ok(post);
     }
+
 
     // 게시글 생성
     @PostMapping

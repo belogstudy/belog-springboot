@@ -2,9 +2,7 @@ package com.velog.velogproject.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,6 +19,7 @@ public class PostEntity {
     private Long Id;
 
     private String title;
+    private String subTitle;
     private String contents;
     private String url;
     private Boolean publicStatus;

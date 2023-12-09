@@ -5,6 +5,11 @@ import com.velog.velogproject.dto.request.RegisterRequestDTO;
 import com.velog.velogproject.dto.response.LoginResponseDTO;
 import com.velog.velogproject.dto.response.RegisterResponseDTO;
 import com.velog.velogproject.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,13 +26,16 @@ public class UserController {
 
     private final UserService userService;
 
-    /**
-     * 로그인 API
-     *
-     * @설명: 사용자의 이메일과 패스워드를 받아 로그인을 처리합니다.
-     * @Request: LoginRequestDTO (String email, String password)
-     * @Response: LoginResponseDTO
-     */
+    /** * 로그인 API */
+    @Operation(summary = "로그인", description = "사용자의 이메일과 패스워드를 받아 로그인을 처리합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "로그인 성공", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = LoginResponseDTO.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "로그인 실패", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = LoginResponseDTO.class))
+            })
+    })
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequest) {
         String email = loginRequest.getEmail();
@@ -44,12 +52,16 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseDTO);
         }
     }
-    /**
-     * 회원가입 API
-     * @설명: 사용자의 이메일과 패스워드를 받아 회원가입을 처리합니다.
-     * @Request: RegisterRequestDTO (이메일, 패스워드, 프로필이름, 프로필소개(한줄소개))
-     * @Response: RegisterResponseDTO
-     */
+    /** * 회원가입 API  */
+    @Operation(summary = "회원가입", description = "사용자의 이메일과 패스워드를 받아 회원가입을 처리합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "회원가입 성공", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = RegisterResponseDTO.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "회원가입 실패", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = RegisterResponseDTO.class))
+            })
+    })
     @PostMapping("/register")
     public ResponseEntity<RegisterResponseDTO> register(@RequestBody RegisterRequestDTO registerRequestDTO) {
         // 클라이언트로부터 전달받은 이메일과 패스워드

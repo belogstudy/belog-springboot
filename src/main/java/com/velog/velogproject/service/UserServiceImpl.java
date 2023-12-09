@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
 
             // 로그인 실패 시 LoginResponseDTO에 errorMessage를 담아 반환
             LoginResponseDTO errorResponse = new LoginResponseDTO();
-            errorResponse.setErrorMessage("로그인 실패 : 사용자의 입력이 잘못 되었습니다.");
+            errorResponse.setMessage("로그인 실패 : 사용자의 입력이 잘못 되었습니다.");
             return errorResponse;
         }
     }
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
             // 실패 시 에러 메시지를 포함한 응답
             log.error("에러 : "+ e.getMessage());
             RegisterResponseDTO errorResponse = new RegisterResponseDTO();
-            errorResponse.setErrorMessage("사용자 등록 실패: 중복된 이메일입니다.");
+            errorResponse.setMessage("사용자 등록 실패: 중복된 이메일입니다.");
             return errorResponse;
         }
     }
