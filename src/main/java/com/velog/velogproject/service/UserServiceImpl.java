@@ -48,7 +48,6 @@ public class UserServiceImpl implements UserService {
                 .password(password)
                 .profileName(profileName)
                 .profile(profile)
-                .createAt(LocalDateTime.now()) // 현재 시간을 넣음.
                 .build();
 
         try {

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +21,7 @@ public class PostServiceImpl implements PostService{
     private final PostRepository postRepository;
 
     @Override
-    public PostResponseDTO.Info getPostByPostId(Long postId) {
+    public PostResponseDTO.Info getPostByPostId(UUID postId) {
         // DB에서 PostId에 해당하는 글을 가져옵니다.
         Optional<PostEntity> entityOptional = postRepository.findById(postId);
 
@@ -46,7 +47,7 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public List<PostResponseDTO.Info> getPostByUserId(Long userId) {
+    public List<PostResponseDTO.Info> getPostByUserId(UUID userId) {
         // DB 에서 UserId 가 일치하는 모든 게시글 리스트를 가져옵니다.
         // 받아온 게시글 리스트를 DTO 로 변환하여 반환합니다.
         // List<PostEntity> posts = postRepository.findByUserId(userId);
@@ -68,11 +69,12 @@ public class PostServiceImpl implements PostService{
         // 사용자에게 받은 PostRequstDTO를 PostEntity로 변환하여 DB에 저장합니다.
         PostEntity dao = PostEntity.createBuilder()
                 .title(postRequestDTO.getTitle())
+                .subTitle(postRequestDTO.getSubTitle())
                 .contents(postRequestDTO.getContents())
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .userId(new UserInfoEntity(postRequestDTO.getAuthor())) // 게시글 작성자
+                .url(postRequestDTO.getUrl())
                 .publicStatus(postRequestDTO.isPublicStatus())
+                .description(postRequestDTO.getDescription())
+                .userId(new UserInfoEntity(postRequestDTO.getUserId())) // 게시글 작성자
                 .build();
 
         PostEntity savePost = postRepository.save(dao);

@@ -6,35 +6,41 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 public class PostRequestDTO {
 
     @Getter
+    @Builder
     public static class Create {
         private String title;
+        private String subTitle;
         private String contents;
-        private Long author;
+        private String url;
         private boolean publicStatus;
+        private String description;
+        private UUID userId;
     }
 
     @Getter
     public static class Update {
-        private Long postId;
+        private UUID postId;
         private String title;
         private String contents;
         private boolean publicStatus;
-        private Long userId;
+        private UUID userId;
     }
     @Getter
     @AllArgsConstructor
     public static class Delete {
-        private Long userId;
-        private Long postId;
+        private UUID userId;
+        private UUID postId;
     }
 }

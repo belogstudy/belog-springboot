@@ -2,10 +2,13 @@ package com.velog.velogproject.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Velog의 Post 테이블을 매핑하는 Entity 클래스 입니다.
@@ -15,20 +18,26 @@ import java.util.List;
 @Table(name = "post")
 public class PostEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    @GeneratedValue
+    private UUID id = UUID.randomUUID();
 
+    @NotNull
     private String title;
+    @NotNull
     private String subTitle;
+    @NotNull @Lob
     private String contents;
+    @NotNull
     private String url;
+    @NotNull
     private Boolean publicStatus;
+    @NotNull
     private String description;
 
     @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private int likes;
+    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime updatedAt = LocalDateTime.now();
+    private int likes = 0;
 
     @ManyToOne
     private UserInfoEntity userId;
@@ -44,19 +53,19 @@ public class PostEntity {
     private List<PhotoEntity> photos;
 
     @Builder(builderClassName = "CreateBuilder", builderMethodName = "createBuilder")
-    public PostEntity(String title, String contents, Boolean publicStatus, LocalDateTime createdAt, LocalDateTime updatedAt, int likes, UserInfoEntity userId) {
+    public PostEntity(String title, String subTitle, String contents, String url, Boolean publicStatus, String description, UserInfoEntity userId) {
         this.title = title;
+        this.subTitle = subTitle;
         this.contents = contents;
+        this.url = url;
         this.publicStatus = publicStatus;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.likes = likes;
+        this.description = description;
         this.userId = userId;
     }
 
     @Builder(builderClassName = "UpdateBuilder", builderMethodName = "updateBuilder")
-    public PostEntity(Long id, String title, String contents, Boolean publicStatus, LocalDateTime updatedAt, UserInfoEntity userId) {
-        Id = id;
+    public PostEntity(UUID id, String title, String contents, Boolean publicStatus, LocalDateTime updatedAt, UserInfoEntity userId) {
+        this.id = id;
         this.title = title;
         this.contents = contents;
         this.publicStatus = publicStatus;
@@ -65,7 +74,7 @@ public class PostEntity {
     }
 
     @Builder(builderClassName = "DeleteBuilder", builderMethodName = "deleteBuilder")
-    public PostEntity(Long id) {
-        Id = id;
+    public PostEntity(UUID id) {
+        this.id = id;
     }
 }

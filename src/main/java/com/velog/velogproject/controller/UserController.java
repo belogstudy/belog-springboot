@@ -53,7 +53,7 @@ public class UserController {
         }
     }
     /** * 회원가입 API  */
-    @Operation(summary = "회원가입", description = "사용자의 이메일과 패스워드를 받아 회원가입을 처리합니다.")
+    @Operation(summary = "회원가입", description = "사용자의 정보를 받아 회원가입을 처리합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "회원가입 성공", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = RegisterResponseDTO.class))

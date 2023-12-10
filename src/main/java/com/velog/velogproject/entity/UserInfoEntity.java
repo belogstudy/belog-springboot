@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Velog의 userInfo 테이블을 매핑하는 Entitiy 클래스 입니다.
@@ -18,13 +20,14 @@ public class UserInfoEntity {
     // 사용자 계정
     @Getter
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    @GeneratedValue
+    private UUID userId = UUID.randomUUID();  // 생성될 때, 랜덤으로 UUID를 할당.
     @Column(unique = true)
     private String email;
     private String password;
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime updatedAt = LocalDateTime.now();
     private String profile;
     private String profileImage;
     private String profileName;
@@ -38,12 +41,11 @@ public class UserInfoEntity {
     private String likePosts;
 
     @Builder(builderClassName = "CreateBuilder", builderMethodName = "createBuilder")
-    public UserInfoEntity(String email, String password, String profileName, String profile, LocalDateTime createAt) {
+    public UserInfoEntity(String email, String password, String profileName, String profile) {
         this.email = email;
         this.password = password;
         this.profileName = profileName;
         this.profile = profile;
-        this.createAt = createAt;
     }
 
     @Builder(builderClassName = "UpdateBuilder", builderMethodName = "updateBuilder")
@@ -63,11 +65,11 @@ public class UserInfoEntity {
         this.likePosts = likePosts;
     }
 
-    public UserInfoEntity(Long userId) {
+    public UserInfoEntity(UUID userId) {
         this.userId = userId;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return this.userId;
     }
 

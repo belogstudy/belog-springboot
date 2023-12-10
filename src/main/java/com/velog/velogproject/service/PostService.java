@@ -4,6 +4,7 @@ import com.velog.velogproject.dto.request.PostRequestDTO;
 import com.velog.velogproject.dto.response.PostResponseDTO;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 포스트와 관련된 서비스 인터페이스
@@ -17,8 +18,8 @@ public interface PostService {
      * @getPostByUserId : 사용자가 작성한 모든 게시글을 조회합니다.
      * @getPostByTitle : 사용자가 검색한 문자열이 포함되어 있는 모든 게시글을 조회합니다.
      */
-    PostResponseDTO.Info getPostByPostId(Long postId);
-    List<PostResponseDTO.Info> getPostByUserId(Long userId);
+    PostResponseDTO.Info getPostByPostId(UUID postId);
+    List<PostResponseDTO.Info> getPostByUserId(UUID userId);
     List<PostResponseDTO.Info> getPostByTitle(String title);
 
     /**

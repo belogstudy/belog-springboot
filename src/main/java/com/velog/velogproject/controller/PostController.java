@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 게시클(포스트) 관련 RestAPI Controller 구현
@@ -30,7 +31,7 @@ public class PostController {
      * @return PostResponseDTO
      */
     @GetMapping("/{postId}")
-    public ResponseEntity<PostResponseDTO.Info> getPost(@PathVariable Long postId) {
+    public ResponseEntity<PostResponseDTO.Info> getPost(@PathVariable UUID postId) {
 
         PostResponseDTO.Info post = postService.getPostByPostId(postId);
         return ResponseEntity.ok(post);
@@ -55,7 +56,7 @@ public class PostController {
 
     // 게시글 삭제
     @DeleteMapping("/{postId}")
-    public ResponseEntity<PostResponseDTO.Response> deletePost(@PathVariable Long postId, @RequestParam Long userId) {
+    public ResponseEntity<PostResponseDTO.Response> deletePost(@PathVariable UUID postId, @RequestParam UUID userId) {
         // postId에 해당하는 게시글을 삭제하는 로직 수행 (해당 게시글이 userId의 소유인지 확인)
         PostRequestDTO.Delete requestDelete = new PostRequestDTO.Delete(postId, userId);
         PostResponseDTO.Response responseDelete = postService.deletePost(requestDelete);

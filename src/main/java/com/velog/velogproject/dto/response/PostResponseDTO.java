@@ -11,6 +11,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Setter
 public class PostResponseDTO {
@@ -18,7 +19,7 @@ public class PostResponseDTO {
     @AllArgsConstructor
     @Builder
     public static class Info{
-        private Long postId;
+        private UUID postId;
 
         private String title;
         private String subTitle;
@@ -31,13 +32,13 @@ public class PostResponseDTO {
         private LocalDateTime updatedAt;
         private int likes;
 
-        private Long userId;
+        private UUID userId;
     }
 
     @Getter
     @AllArgsConstructor
     public static class Response {
-        private Long postId;
+        private UUID postId;
         private String message;
     }
 }

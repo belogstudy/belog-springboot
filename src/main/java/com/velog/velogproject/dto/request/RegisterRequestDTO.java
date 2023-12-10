@@ -6,6 +6,6 @@ import lombok.Getter;
 public class RegisterRequestDTO {
     private String email;
     private String password;
-    private String profile;
     private String profileName;
+    private String profile;
 }

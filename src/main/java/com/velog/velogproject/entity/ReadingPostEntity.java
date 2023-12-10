@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Velog의 readingPost 테이블을 매핑하는 Entity 클래스 입니다.
@@ -14,8 +15,8 @@ import java.time.LocalDateTime;
 @Table(name = "readingPost")
 public class ReadingPostEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    @GeneratedValue
+    private UUID Id = UUID.randomUUID();
     private LocalDateTime createdAt;
     private LocalDateTime updateAt;
     @ManyToOne
