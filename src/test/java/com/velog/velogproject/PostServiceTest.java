@@ -2,8 +2,6 @@ package com.velog.velogproject;
 
 import com.velog.velogproject.dto.request.PostRequestDTO;
 import com.velog.velogproject.dto.response.UserResponseDTO;
-import com.velog.velogproject.entity.PostEntity;
-import com.velog.velogproject.entity.UserInfoEntity;
 import com.velog.velogproject.service.PostService;
 import com.velog.velogproject.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +29,7 @@ public class PostServiceTest {
         // 10개의 포스트 생성
         for (int i = 1; i < Count; i++) {
             // PostEntity를 빌더 패턴을 활용하여 생성
-            PostRequestDTO.Create request = PostRequestDTO.Create.builder()
+            PostRequestDTO.CreatePost request = PostRequestDTO.CreatePost.builder()
                     .title("제목" + i)
                     .subTitle("부제목" + i)
                     .contents("내용" + i)

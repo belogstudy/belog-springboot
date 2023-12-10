@@ -2,8 +2,11 @@ package com.velog.velogproject.service;
 
 import com.velog.velogproject.dto.request.PostRequestDTO;
 import com.velog.velogproject.dto.response.PostResponseDTO;
+import com.velog.velogproject.entity.CommentEntity;
 import com.velog.velogproject.entity.PostEntity;
 import com.velog.velogproject.entity.UserInfoEntity;
+import com.velog.velogproject.mapper.CommentMapper;
+import com.velog.velogproject.repository.CommentRepository;
 import com.velog.velogproject.repository.PostRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -14,14 +17,19 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * 게시글 서비스 구현
+ * RequestDTO -> DAO -> Entity -> ResponseDTO
+ */
 @Service
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService{
 
     private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
 
     @Override
-    public PostResponseDTO.Info getPostByPostId(UUID postId) {
+    public PostResponseDTO.Post getPostByPostId(UUID postId) {
         // DB에서 PostId에 해당하는 글을 가져옵니다.
         Optional<PostEntity> entityOptional = postRepository.findById(postId);
 
@@ -30,7 +38,7 @@ public class PostServiceImpl implements PostService{
 
         // DB에서 가져온 PostEntity를 PostResponseDTO.Info로 변환하여 반환합니다.
         PostEntity postEntity = entityOptional.get();
-        PostResponseDTO.Info responseDto = PostResponseDTO.Info.builder()
+        PostResponseDTO.Post responseDto = PostResponseDTO.Post.builder()
                 .postId(postEntity.getId())
                 .title(postEntity.getTitle())
                 .contents(postEntity.getContents())
@@ -47,7 +55,7 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public List<PostResponseDTO.Info> getPostByUserId(UUID userId) {
+    public List<PostResponseDTO.Post> getPostByUserId(UUID userId) {
         // DB 에서 UserId 가 일치하는 모든 게시글 리스트를 가져옵니다.
         // 받아온 게시글 리스트를 DTO 로 변환하여 반환합니다.
         // List<PostEntity> posts = postRepository.findByUserId(userId);
@@ -56,7 +64,7 @@ public class PostServiceImpl implements PostService{
 
 
     @Override
-    public List<PostResponseDTO.Info> getPostByTitle(String title) {
+    public List<PostResponseDTO.Post> getPostByTitle(String title) {
         // DB 에서 SearchString 이 Title 에 포함된 게시글 리스트를 가져옵니다.
         // postRepository.findById(title);
         // 받아온 게시글 리스트를 DTO 로 변환하여 반환합니다.
@@ -64,7 +72,7 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public PostResponseDTO.Response createPost(PostRequestDTO.Create postRequestDTO) {
+    public PostResponseDTO.ResponsePost createPost(PostRequestDTO.CreatePost postRequestDTO) {
 
         // 사용자에게 받은 PostRequstDTO를 PostEntity로 변환하여 DB에 저장합니다.
         PostEntity dao = PostEntity.createBuilder()
@@ -80,11 +88,11 @@ public class PostServiceImpl implements PostService{
         PostEntity savePost = postRepository.save(dao);
 
         // 게시글 생성이 성공하면 생성된 게시글아이디(postId) 를 반환합니다.
-        return new PostResponseDTO.Response(savePost.getId(), "게시글이 성공적으로 생성되었습니다.");
+        return new PostResponseDTO.ResponsePost(savePost.getId(), "게시글이 성공적으로 생성되었습니다.");
     }
 
     @Override
-    public PostResponseDTO.Response updatePost(PostRequestDTO.Update postRequestDTO) {
+    public PostResponseDTO.ResponsePost updatePost(PostRequestDTO.UpdatePost postRequestDTO) {
 
         // 게시글 존재 여부 확인
         PostEntity existingPost = postRepository.findById(postRequestDTO.getPostId())
@@ -104,26 +112,56 @@ public class PostServiceImpl implements PostService{
         PostEntity savePost = postRepository.save(updatePost);
 
         // 게시글 업데이트가 성공하면 생성된 게시글아이디(postId) 를 반환합니다.
-        return new PostResponseDTO.Response(savePost.getId(), "게시글이 성공적으로 업데이트 되었습니다.");
+        return new PostResponseDTO.ResponsePost(savePost.getId(), "게시글이 성공적으로 업데이트 되었습니다.");
     }
 
     @Override
-    public PostResponseDTO.Response deletePost(PostRequestDTO.Delete requestDTO) {
+    public PostResponseDTO.ResponsePost deletePost(PostRequestDTO.DeletePost postRequestDTO) {
 
         // 게시글 존재 여부 확인
-        PostEntity existingPost = postRepository.findById(requestDTO.getPostId())
-                .orElseThrow(() -> new EntityNotFoundException("게시글이 존재하지 않습니다. postId: " + requestDTO.getPostId()));
+        PostEntity existingPost = postRepository.findById(postRequestDTO.getPostId())
+                .orElseThrow(() -> new EntityNotFoundException("게시글이 존재하지 않습니다. postId: " + postRequestDTO.getPostId()));
 
         // 권한이 있는지 확인합니다.
         // TODO: 권한 확인 로직을 추가할 부분
 
         // 해당 게시글을 삭제합니다.
         PostEntity deletePost = PostEntity.deleteBuilder()
-                .id(requestDTO.getPostId())
+                .id(postRequestDTO.getPostId())
                 .build();
 
         postRepository.delete(deletePost);
 
-        return new PostResponseDTO.Response(requestDTO.getPostId(),"게시글이 성공적으로 삭제되었습니다.");
+        return new PostResponseDTO.ResponsePost(postRequestDTO.getPostId(),"게시글이 성공적으로 삭제 되었습니다.");
+    }
+
+    @Override
+    public PostResponseDTO.ResponseComment createComment(PostRequestDTO.CreateComment commentRequest) {
+
+        CommentEntity dao = CommentMapper.toEntity(commentRequest);
+
+        CommentEntity savedEntity = commentRepository.save(dao);
+
+        return new PostResponseDTO.ResponseComment(savedEntity.getId(),"댓글이 성공적으로 생성 되었습니다.");
+    }
+
+    @Override
+    public PostResponseDTO.ResponseComment updateComment(PostRequestDTO.UpdateComment commentRequest) {
+
+        CommentEntity dao = CommentMapper.toEntity(commentRequest);
+
+        CommentEntity savedEntity = commentRepository.save(dao);
+
+        return new PostResponseDTO.ResponseComment(savedEntity.getId(),"댓글이 성공적으로 업데이트 되었습니다.");
+    }
+
+    @Override
+    public PostResponseDTO.ResponseComment deleteComment(PostRequestDTO.DeleteComment commentRequest) {
+
+        CommentEntity dao = CommentMapper.toEntity(commentRequest);
+
+        commentRepository.delete(dao);
+
+        return new PostResponseDTO.ResponseComment(commentRequest.getCommentId(),"댓글이 성공적으로 삭제 되었습니다.");
     }
 }

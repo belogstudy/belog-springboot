@@ -1,16 +1,11 @@
 package com.velog.velogproject.dto.response;
 
-import com.velog.velogproject.entity.*;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Setter
@@ -18,7 +13,7 @@ public class PostResponseDTO {
     @Getter
     @AllArgsConstructor
     @Builder
-    public static class Info{
+    public static class Post {
         private UUID postId;
 
         private String title;
@@ -37,8 +32,15 @@ public class PostResponseDTO {
 
     @Getter
     @AllArgsConstructor
-    public static class Response {
+    public static class ResponsePost {
         private UUID postId;
+        private String message;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class ResponseComment {
+        private UUID commentId;
         private String message;
     }
 }
