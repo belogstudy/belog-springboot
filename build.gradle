@@ -1,3 +1,4 @@
+//file:noinspection DependencyNotationArgument
 plugins {
 	id 'java'
 	id 'war'
@@ -31,6 +32,8 @@ dependencies {
 	// Lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
 
 	// Mysql
 	runtimeOnly 'com.mysql:mysql-connector-j'
