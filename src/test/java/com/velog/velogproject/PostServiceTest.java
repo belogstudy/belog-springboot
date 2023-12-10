@@ -1,7 +1,7 @@
 package com.velog.velogproject;
 
 import com.velog.velogproject.dto.request.PostRequestDTO;
-import com.velog.velogproject.dto.response.LoginResponseDTO;
+import com.velog.velogproject.dto.response.UserResponseDTO;
 import com.velog.velogproject.entity.PostEntity;
 import com.velog.velogproject.entity.UserInfoEntity;
 import com.velog.velogproject.service.PostService;
@@ -26,7 +26,7 @@ public class PostServiceTest {
         int Count = 40;  // 생성할 게시글 수
 
         // 로그인 정보 생성
-        LoginResponseDTO dto = userService.login("test@example.com", "password");
+        UserResponseDTO.Login dto = userService.login("test@example.com", "password");
 
         // 10개의 포스트 생성
         for (int i = 1; i < Count; i++) {
@@ -44,5 +44,10 @@ public class PostServiceTest {
             // 생성한 포스트를 저장
             postService.createPost(request);
         }
+    }
+
+    @Test
+    public void 댓글생성_테스트() {
+
     }
 }

@@ -1,7 +1,6 @@
 package com.velog.velogproject.service;
 
-import com.velog.velogproject.dto.response.LoginResponseDTO;
-import com.velog.velogproject.dto.response.RegisterResponseDTO;
+import com.velog.velogproject.dto.response.UserResponseDTO;
 
 /**
  * 사용자 서비스 인터페이스
@@ -14,7 +13,7 @@ public interface UserService {
      * @param password : 패스워드
      * @return LoginResponseDTO
      */
-    LoginResponseDTO login(String email, String password);
+    UserResponseDTO.Login login(String email, String password);
 
     /**
      * 사용자 회원가입 서비스
@@ -24,7 +23,7 @@ public interface UserService {
      * @param profile : 한 줄 소개
      * @return RegisterResponseDTO
      */
-    RegisterResponseDTO register(String email, String password, String profileName, String profile);
+    UserResponseDTO.Register register(String email, String password, String profileName, String profile);
 
 
 }

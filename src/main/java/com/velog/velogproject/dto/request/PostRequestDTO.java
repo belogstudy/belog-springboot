@@ -28,7 +28,6 @@ public class PostRequestDTO {
         private String description;
         private UUID userId;
     }
-
     @Getter
     public static class Update {
         private UUID postId;
