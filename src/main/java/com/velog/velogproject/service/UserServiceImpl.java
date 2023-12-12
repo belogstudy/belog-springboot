@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * 사용자 서비스의 비지니스 로직을 구현
@@ -67,5 +68,19 @@ public class UserServiceImpl implements UserService {
             errorResponse.setMessage("사용자 등록 실패: 중복된 이메일입니다.");
             return errorResponse;
         }
+    }
+
+    @Override
+    public UserResponseDTO.Withdraw withdraw(UUID userId) {
+
+        // 데이터 무결성을 위해서 유저를 삭제하는 것이 아닌, 비활성화.
+        UserInfoEntity deleteUser = UserInfoEntity.deleteBuilder()
+                .userId(userId)
+                .deletedAt(LocalDateTime.now())
+                .build();
+
+        userRepository.save(deleteUser);
+
+        return new UserResponseDTO.Withdraw(userId, "성공적으로 사용자를 비활성화 하였습니다.");
     }
 }

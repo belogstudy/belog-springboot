@@ -1,6 +1,8 @@
 package com.velog.velogproject;
 
+import com.velog.velogproject.dto.response.UserResponseDTO;
 import com.velog.velogproject.service.UserService;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,6 +29,16 @@ public class UserServiceTest {
                 "test@example.com",
                 "password"
         );
+    }
+
+    @Test @Transactional
+    public void 회원탈퇴_테스트() {
+        UserResponseDTO.Login user = userService.login(
+                "test@example.com",
+                "password"
+        );
+
+        userService.withdraw(user.getUserId());
     }
 
 }

@@ -2,8 +2,10 @@ package com.velog.velogproject.service;
 
 import com.velog.velogproject.dto.response.UserResponseDTO;
 
+import java.util.UUID;
+
 /**
- * 사용자 서비스 인터페이스
+ * 사용자 인증 서비스 인터페이스
  */
 public interface UserService {
 
@@ -25,5 +27,9 @@ public interface UserService {
      */
     UserResponseDTO.Register register(String email, String password, String profileName, String profile);
 
+    /**
+     * 사용자 회원 탈퇴 서비스
+     */
+    UserResponseDTO.Withdraw withdraw(UUID userId);
 
 }

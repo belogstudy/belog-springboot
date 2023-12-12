@@ -1,5 +1,6 @@
 package com.velog.velogproject.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,15 @@ public class UserResponseDTO {
         private UUID userId;
         private String email;
 
+        private String Message;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    public static class Withdraw {
+
+        private UUID userId;
         private String Message;
     }
 }

@@ -69,8 +69,8 @@ public class PostController {
     }
 
     @Operation(summary = "댓글 삭제", description = "댓글아이디와 사용자아이디를 받아 해당 댓글을 삭제합니다.")
-    @DeleteMapping("/comment/{commentId}")
-    public ResponseEntity<PostResponseDTO.ResponseComment> deleteComment(@PathVariable UUID commentId, @RequestParam UUID userId) {
+    @DeleteMapping("/comment/{commentId}/{userId}")
+    public ResponseEntity<PostResponseDTO.ResponseComment> deleteComment(@PathVariable UUID commentId, @PathVariable UUID userId) {
 
         PostResponseDTO.ResponseComment dto = postService.deleteComment(PostRequestDTO.DeleteComment.builder()
                 .commentId(commentId)

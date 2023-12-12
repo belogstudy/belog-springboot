@@ -29,6 +29,7 @@ public class UserInfoEntity {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt = LocalDateTime.now();
+    private LocalDateTime deletedAt;
     private String profile;
     private String profileImage;
     private String profileName;
@@ -67,6 +68,12 @@ public class UserInfoEntity {
         this.aboutMe = aboutMe;
         this.snsMail = snsMail;
         this.likePosts = likePosts;
+    }
+
+    @Builder(builderClassName = "DeleteBuilder", builderMethodName = "deleteBuilder")
+    public UserInfoEntity(UUID userId, LocalDateTime deletedAt) {
+        this.userId = userId;
+        this.deletedAt = deletedAt;
     }
 
     public UserInfoEntity(UUID userId) {
