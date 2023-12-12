@@ -12,7 +12,9 @@ public class CommentMapper {
         return CommentEntity.createBuilder()
                 .content(createCommentDTO.getContent())
                 .depth(createCommentDTO.getDepth())
-                .postId(new PostEntity(createCommentDTO.getPostId()))
+                .postId(PostEntity.builder()
+                        .id(createCommentDTO.getPostId())
+                        .build())
                 .userId(new UserInfoEntity(createCommentDTO.getUserId()))
                 .build();
     }

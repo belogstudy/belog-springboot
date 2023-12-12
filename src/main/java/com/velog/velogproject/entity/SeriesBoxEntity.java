@@ -17,6 +17,7 @@ public class SeriesBoxEntity {
     private String title;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
 
     @ManyToOne
     private UserInfoEntity userId;

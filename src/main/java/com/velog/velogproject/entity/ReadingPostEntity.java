@@ -19,6 +19,7 @@ public class ReadingPostEntity {
     private UUID Id = UUID.randomUUID();
     private LocalDateTime createdAt;
     private LocalDateTime updateAt;
+    private LocalDateTime deletedAt;
     @ManyToOne
     private PostEntity postId;
     @ManyToOne

@@ -24,7 +24,7 @@ import java.util.UUID;
 public class PostController {
     private final PostService postService;
     
-    @Operation(summary = "게시글 조회(오루 수정중)", description = "게시글아이디를 받아 해당 게시글을 조회합니다.")
+    @Operation(summary = "게시글 조회", description = "게시글아이디를 받아 해당 게시글을 조회합니다.")
     @GetMapping("/{postId}")
     public ResponseEntity<PostResponseDTO.Post> getPost(@PathVariable UUID postId) {
         PostResponseDTO.Post post = postService.getPostByPostId(postId);

@@ -26,6 +26,7 @@ public class CommentEntity {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt = LocalDateTime.now();
+    private LocalDateTime deletedAt;
 
     @ManyToOne
     private PostEntity postId;
@@ -45,7 +46,14 @@ public class CommentEntity {
         this.depth = depth;
         this.updatedAt = updatedAt;
     }
+
     @Builder(builderClassName = "DeleteBuilder", builderMethodName = "deleteBuilder")
+    public CommentEntity(UUID id, LocalDateTime deletedAt) {
+        this.id = id;
+        this.deletedAt = deletedAt;
+    }
+
+    @Builder
     public CommentEntity(UUID id) {
         this.id = id;
     }
@@ -54,7 +62,7 @@ public class CommentEntity {
         return this.postId.getId();
     }
 
-    public UUID getUserId() {
-        return this.userId.getUserId();
-    }
+//    public UUID getUserId() {
+//        return this.userId.getUserId();
+//    }
 }

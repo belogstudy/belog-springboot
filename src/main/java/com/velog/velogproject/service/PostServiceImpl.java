@@ -11,6 +11,7 @@ import com.velog.velogproject.repository.CommentRepository;
 import com.velog.velogproject.repository.PostRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,7 +24,7 @@ import java.util.UUID;
  * RequestDTO -> DAO -> Entity -> ResponseDTO
  */
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor @Slf4j
 public class PostServiceImpl implements PostService{
 
     private final PostRepository postRepository;
@@ -32,19 +33,25 @@ public class PostServiceImpl implements PostService{
     @Override
     public PostResponseDTO.Post getPostByPostId(UUID postId) {
         // DB에서 PostId에 해당하는 게시글과 댓글을 가져옵니다.
+        // DB에서 PostId에 해당하는 게시글과 댓글을 가져옵니다.
         Optional<PostEntity> postEntityOptional = postRepository.findById(postId);
-//        List<CommentEntity> commentEntityList = commentRepository.findAllByPostId(postId);
+        log.info("포스트: {}", postEntityOptional.get());
+
+        PostEntity post = PostEntity.builder()
+                .id(postId)
+                .build();
+        List<CommentEntity> commentEntityList = commentRepository.findByPostId(post);
+        log.info("댓글 리스트 : {}", commentEntityList.toString());
 
 
         // 만약 해당 postId에 대한 게시글이 없다면 null을 반환하거나 예외를 처리
-        // TODO: 예외 처리
-
 
         // DB에서 가져온 PostEntity를 PostResponseDTO.Post로 변환하여 반환합니다.
         PostEntity postEntity = postEntityOptional.get();
 
-//        return PostMapper.toDTO(postEntity, commentEntityList);
-        return null;
+        log.info("게시글 DTO: {}",PostMapper.toDTO(postEntity, commentEntityList));
+
+        return PostMapper.toDTO(postEntity, commentEntityList);
     }
 
     @Override

@@ -37,6 +37,7 @@ public class PostEntity {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt = LocalDateTime.now();
+    private LocalDateTime deletedAt;
     private int likes = 0;
 
     @ManyToOne
@@ -76,6 +77,12 @@ public class PostEntity {
     }
 
     @Builder(builderClassName = "DeleteBuilder", builderMethodName = "deleteBuilder")
+    public PostEntity(UUID id, LocalDateTime deletedAt) {
+        this.id = id;
+        this.deletedAt = deletedAt;
+    }
+
+    @Builder
     public PostEntity(UUID id) {
         this.id = id;
     }

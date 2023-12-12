@@ -3,6 +3,7 @@ package com.velog.velogproject.mapper;
 import com.velog.velogproject.dto.response.PostResponseDTO;
 import com.velog.velogproject.entity.CommentEntity;
 import com.velog.velogproject.entity.PostEntity;
+import com.velog.velogproject.entity.UserInfoEntity;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +19,7 @@ public class PostMapper {
                 .url(postEntity.getUrl())
                 .publicStatus(postEntity.getPublicStatus())
                 .description(postEntity.getDescription())
-                //.comments(mapCommentEntitiesToDTO(comments))
+                .comments(mapCommentEntitiesToDTO(comments))
                 .createdAt(postEntity.getCreatedAt())
                 .updatedAt(postEntity.getUpdatedAt())
                 .likes(postEntity.getLikes())
@@ -26,17 +27,17 @@ public class PostMapper {
                 .build();
     }
 
-//    private static List<PostResponseDTO.Comment> mapCommentEntitiesToDTO(List<CommentEntity> commentEntities) {
-//        return commentEntities.stream()
-//                .map(commentEntity -> PostResponseDTO.Comment.builder()
-//                        .commentId(commentEntity.getId())
-//                        .content(commentEntity.getContent())
-//                        .depth(commentEntity.getDepth())
-//                        .createdAt(commentEntity.getCreatedAt())
-//                        .updatedAt(commentEntity.getUpdatedAt())
-//                        .postId(commentEntity.getPostId())
-//                        .userId(commentEntity.getUserId())
-//                        .build())
-//                .collect(Collectors.toList());
-//    }
+    private static List<PostResponseDTO.Comment> mapCommentEntitiesToDTO(List<CommentEntity> commentEntities) {
+        return commentEntities.stream()
+                .map(commentEntity -> PostResponseDTO.Comment.builder()
+                        .commentId(commentEntity.getId())
+                        .content(commentEntity.getContent())
+                        .depth(commentEntity.getDepth())
+                        .createdAt(commentEntity.getCreatedAt())
+                        .updatedAt(commentEntity.getUpdatedAt())
+                        .postId(commentEntity.getPostId())
+                        .userId(commentEntity.getUserId().getId())
+                        .build())
+                .collect(Collectors.toList());
+    }
 }

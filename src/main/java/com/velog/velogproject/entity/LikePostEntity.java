@@ -13,8 +13,9 @@ public class LikePostEntity {
     @Id
     @GeneratedValue
     private UUID id = UUID.randomUUID();
-    private LocalDateTime createdAt;
-    private LocalDateTime updateAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime updatedAt = LocalDateTime.now();
+    private LocalDateTime deletedAt;
     @ManyToOne
     private PostEntity postId;
     @OneToOne

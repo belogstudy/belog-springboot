@@ -18,6 +18,7 @@ public class PhotoEntity {
     private String src;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
 
     @ManyToOne
     private PostEntity postId;

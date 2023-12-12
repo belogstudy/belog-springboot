@@ -1,6 +1,7 @@
 package com.velog.velogproject.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.UUID;
  * */
 @Entity
 @NoArgsConstructor @Getter
+@AllArgsConstructor @Builder
 @Table(name = "userInfo", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class UserInfoEntity {
 

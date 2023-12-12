@@ -1,7 +1,14 @@
 package com.velog.velogproject;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.velog.velogproject.dto.request.PostRequestDTO;
 import com.velog.velogproject.dto.response.UserResponseDTO;
+import com.velog.velogproject.entity.CommentEntity;
+import com.velog.velogproject.entity.PostEntity;
+import com.velog.velogproject.mapper.PostMapper;
+import com.velog.velogproject.repository.CommentRepository;
+import com.velog.velogproject.repository.PostRepository;
 import com.velog.velogproject.service.PostService;
 import com.velog.velogproject.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -9,12 +16,20 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 @SpringBootTest
 @Slf4j
 public class PostServiceTest {
 
     @Autowired
     private PostService postService;
+    @Autowired
+    private PostRepository postRepository;
+    @Autowired
+    private CommentRepository commentRepository;
     @Autowired
     private UserService userService;
 
@@ -57,4 +72,45 @@ public class PostServiceTest {
 //                .build();
 //        postService.createComment()
 //    }
+
+    @Test
+    public void 포스트검색(){
+        UUID postId = UUID.fromString("532df4df-c29a-4815-92e8-be18e7ea032d");
+        Optional<PostEntity> post = postRepository.findById(postId);
+
+        log.info("포스트: {}", post.get());
+    }
+
+    @Test
+    public void 댓글검색(){
+        UUID postId = UUID.fromString("532df4df-c29a-4815-92e8-be18e7ea032d");
+        PostEntity post = PostEntity.builder()
+                .id(postId)
+                .build();
+        List<CommentEntity> entity = commentRepository.findByPostId(post);
+
+        log.info("댓글 리스트 : {}", entity.toString());
+    }
+
+    @Test
+    public void 게시글_가져오기(){
+        UUID postId = UUID.fromString("532df4df-c29a-4815-92e8-be18e7ea032d");
+
+        // DB에서 PostId에 해당하는 게시글과 댓글을 가져옵니다.
+        Optional<PostEntity> postEntityOptional = postRepository.findById(postId);
+        log.info("포스트: {}", postEntityOptional.get());
+
+        PostEntity post = PostEntity.builder()
+                .id(postId)
+                .build();
+        List<CommentEntity> commentEntityList = commentRepository.findByPostId(post);
+        log.info("댓글 리스트 : {}", commentEntityList.toString());
+
+
+        // DB에서 가져온 PostEntity를 PostResponseDTO.Post로 변환하여 반환합니다.
+        PostEntity postEntity = postEntityOptional.get();
+
+        log.info("게시글 DTO: {}",PostMapper.toDTO(postEntity, commentEntityList));
+
+    }
 }
