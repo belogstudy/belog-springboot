@@ -57,7 +57,7 @@ public class UserController {
     @Operation(summary = "회원가입", description = "사용자의 정보를 받아 회원가입을 처리합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "회원가입 성공", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.Register.class))
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = UserRequestDTO.Register.class))
             }),
             @ApiResponse(responseCode = "500", description = "회원가입 실패", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.Register.class))
