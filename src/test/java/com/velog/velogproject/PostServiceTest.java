@@ -44,8 +44,17 @@ public class PostServiceTest {
         }
     }
 
-    @Test
-    public void 댓글생성_테스트() {
-
-    }
+//    @Test
+//    public void 댓글생성_테스트() {
+//        // 로그인 정보 생성
+//        UserResponseDTO.Login dto = userService.login("test@example.com", "password");
+//
+//        PostRequestDTO.CreateComment comment = PostRequestDTO.CreateComment.builder()
+//                .postId()
+//                .userId(dto.getUserId())
+//                .content()
+//                .depth()
+//                .build();
+//        postService.createComment()
+//    }
 }

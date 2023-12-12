@@ -42,7 +42,7 @@ public class TestController {
                             .createdAt(postEntity.getCreatedAt())
                             .updatedAt(postEntity.getUpdatedAt())
                             .likes(postEntity.getLikes())
-                            .userId(postEntity.getUserId().getId()) // 여기서 userId를 가져와서 초기화
+                            .userId(postEntity.getUserId()) // 여기서 userId를 가져와서 초기화
                             .build();
 
                     return dto;

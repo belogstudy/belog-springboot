@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Setter
@@ -22,11 +23,25 @@ public class PostResponseDTO {
         private String url;
         private Boolean publicStatus;
         private String description;
+        private List<Comment> comments;
 
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
         private int likes;
 
+        private UUID userId;
+    }
+
+    @Getter
+    @Builder
+    public static class Comment {
+        private UUID commentId;
+
+        private String content;
+        private int depth;
+        private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
+        private UUID postId;
         private UUID userId;
     }
 

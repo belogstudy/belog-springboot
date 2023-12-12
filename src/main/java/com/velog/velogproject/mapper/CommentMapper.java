@@ -3,6 +3,7 @@ package com.velog.velogproject.mapper;
 import com.velog.velogproject.dto.request.PostRequestDTO;
 import com.velog.velogproject.entity.CommentEntity;
 import com.velog.velogproject.entity.PostEntity;
+import com.velog.velogproject.entity.UserInfoEntity;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +13,7 @@ public class CommentMapper {
                 .content(createCommentDTO.getContent())
                 .depth(createCommentDTO.getDepth())
                 .postId(new PostEntity(createCommentDTO.getPostId()))
+                .userId(new UserInfoEntity(createCommentDTO.getUserId()))
                 .build();
     }
 

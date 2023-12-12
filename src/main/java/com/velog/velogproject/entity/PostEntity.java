@@ -52,6 +52,8 @@ public class PostEntity {
     @OneToMany(mappedBy = "postId",cascade = CascadeType.ALL)
     private List<PhotoEntity> photos;
 
+
+
     @Builder(builderClassName = "CreateBuilder", builderMethodName = "createBuilder")
     public PostEntity(String title, String subTitle, String contents, String url, Boolean publicStatus, String description, UserInfoEntity userId) {
         this.title = title;
@@ -76,5 +78,9 @@ public class PostEntity {
     @Builder(builderClassName = "DeleteBuilder", builderMethodName = "deleteBuilder")
     public PostEntity(UUID id) {
         this.id = id;
+    }
+
+    public UUID getUserId() {
+        return this.userId.getUserId();
     }
 }

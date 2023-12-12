@@ -6,6 +6,7 @@ import com.velog.velogproject.entity.CommentEntity;
 import com.velog.velogproject.entity.PostEntity;
 import com.velog.velogproject.entity.UserInfoEntity;
 import com.velog.velogproject.mapper.CommentMapper;
+import com.velog.velogproject.mapper.PostMapper;
 import com.velog.velogproject.repository.CommentRepository;
 import com.velog.velogproject.repository.PostRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -30,28 +31,20 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public PostResponseDTO.Post getPostByPostId(UUID postId) {
-        // DB에서 PostId에 해당하는 글을 가져옵니다.
-        Optional<PostEntity> entityOptional = postRepository.findById(postId);
+        // DB에서 PostId에 해당하는 게시글과 댓글을 가져옵니다.
+        Optional<PostEntity> postEntityOptional = postRepository.findById(postId);
+//        List<CommentEntity> commentEntityList = commentRepository.findAllByPostId(postId);
 
-        // 만약 해당 postId에 대한 글이 없다면 null을 반환하거나 예외를 처리
+
+        // 만약 해당 postId에 대한 게시글이 없다면 null을 반환하거나 예외를 처리
         // TODO: 예외 처리
 
-        // DB에서 가져온 PostEntity를 PostResponseDTO.Info로 변환하여 반환합니다.
-        PostEntity postEntity = entityOptional.get();
-        PostResponseDTO.Post responseDto = PostResponseDTO.Post.builder()
-                .postId(postEntity.getId())
-                .title(postEntity.getTitle())
-                .contents(postEntity.getContents())
-                .url(postEntity.getUrl())
-                .publicStatus(postEntity.getPublicStatus())
-                .description(postEntity.getDescription())
-                .createdAt(postEntity.getCreatedAt())
-                .updatedAt(postEntity.getUpdatedAt())
-                .likes(postEntity.getLikes())
-                .userId(postEntity.getId())
-                .build();
 
-        return responseDto;
+        // DB에서 가져온 PostEntity를 PostResponseDTO.Post로 변환하여 반환합니다.
+        PostEntity postEntity = postEntityOptional.get();
+
+//        return PostMapper.toDTO(postEntity, commentEntityList);
+        return null;
     }
 
     @Override

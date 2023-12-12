@@ -21,7 +21,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController @Slf4j
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
-@Tag(name = "사용자 관련 API")
+@Tag(name = "사용자 인증 관련 API")
+@RequestMapping("/auth")
 public class UserController {
 
     private final UserService userService;

@@ -29,12 +29,15 @@ public class CommentEntity {
 
     @ManyToOne
     private PostEntity postId;
+    @ManyToOne
+    private UserInfoEntity userId;
 
     @Builder(builderClassName = "CreateBuilder", builderMethodName = "createBuilder")
-    public CommentEntity(String content, int depth, PostEntity postId) {
+    public CommentEntity(String content, int depth, PostEntity postId, UserInfoEntity userId) {
         this.content = content;
         this.depth = depth;
         this.postId = postId;
+        this.userId = userId;
     }
     @Builder(builderClassName = "UpdateBuilder", builderMethodName = "updateBuilder")
     public CommentEntity(String content, int depth, LocalDateTime updatedAt) {
@@ -45,5 +48,13 @@ public class CommentEntity {
     @Builder(builderClassName = "DeleteBuilder", builderMethodName = "deleteBuilder")
     public CommentEntity(UUID id) {
         this.id = id;
+    }
+
+    public UUID getPostId() {
+        return this.postId.getId();
+    }
+
+    public UUID getUserId() {
+        return this.userId.getUserId();
     }
 }

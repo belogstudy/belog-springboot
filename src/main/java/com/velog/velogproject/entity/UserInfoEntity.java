@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -39,6 +40,9 @@ public class UserInfoEntity {
     private String aboutMe;
     private String snsMail;
     private String likePosts;
+
+    @OneToMany(mappedBy = "userId",cascade = CascadeType.ALL)
+    private List<CommentEntity> comment;
 
     @Builder(builderClassName = "CreateBuilder", builderMethodName = "createBuilder")
     public UserInfoEntity(String email, String password, String profileName, String profile) {

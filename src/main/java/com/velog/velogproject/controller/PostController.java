@@ -20,11 +20,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @Tag(name = "게시글 관련 API")
+@RequestMapping("/post")
 public class PostController {
     private final PostService postService;
     
-    @Operation(summary = "게시글 조회", description = "게시글아이디를 받아 해당 게시글을 조회합니다.")
-    @GetMapping("/post/{postId}")
+    @Operation(summary = "게시글 조회(오루 수정중)", description = "게시글아이디를 받아 해당 게시글을 조회합니다.")
+    @GetMapping("/{postId}")
     public ResponseEntity<PostResponseDTO.Post> getPost(@PathVariable UUID postId) {
         PostResponseDTO.Post post = postService.getPostByPostId(postId);
         return ResponseEntity.ok().body(post);
@@ -32,21 +33,21 @@ public class PostController {
 
 
     @Operation(summary = "게시글 생성", description = "게시글 정보를 받아 게시글을 생성합니다.")
-    @PostMapping("/post")
+    @PostMapping("")
     public ResponseEntity<PostResponseDTO.ResponsePost> createPost(@RequestBody PostRequestDTO.CreatePost postDto) {
         PostResponseDTO.ResponsePost createdPost = postService.createPost(postDto);
         return ResponseEntity.ok().body(createdPost);
     }
 
     @Operation(summary = "게시글 수정", description = "게시글 정보를 받아 해당 게시글을 수정합니다.")
-    @PutMapping("/post")
+    @PutMapping("")
     public ResponseEntity<PostResponseDTO.ResponsePost> updatePost(@RequestBody PostRequestDTO.UpdatePost postDto) {
         PostResponseDTO.ResponsePost updatedPost = postService.updatePost(postDto);
         return ResponseEntity.ok().body(updatedPost);
     }
 
     @Operation(summary = "게시글 삭제", description = "게시글아이디와 사용자아이디를 받아 해당 게시글을 삭제합니다.")
-    @DeleteMapping("/post/{postId}")
+    @DeleteMapping("/{postId}")
     public ResponseEntity<PostResponseDTO.ResponsePost> deletePost(@PathVariable UUID postId, @RequestParam UUID userId) {
         PostRequestDTO.DeletePost requestDeletePost = new PostRequestDTO.DeletePost(postId, userId);
         PostResponseDTO.ResponsePost responsePostDelete = postService.deletePost(requestDeletePost);
