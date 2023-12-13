@@ -31,8 +31,8 @@ public class PostRequestDTO {
     @AllArgsConstructor
     @Builder
     public static class DeletePost {
-        private UUID userId;
         private UUID postId;
+        private UUID userId;
     }
 
     @Getter

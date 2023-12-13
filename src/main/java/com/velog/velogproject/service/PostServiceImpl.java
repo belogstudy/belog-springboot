@@ -115,22 +115,19 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public PostResponseDTO.ResponsePost deletePost(PostRequestDTO.DeletePost postRequestDTO) {
-
         // 게시글 존재 여부 확인
-        PostEntity existingPost = postRepository.findById(postRequestDTO.getPostId())
-                .orElseThrow(() -> new EntityNotFoundException("게시글이 존재하지 않습니다. postId: " + postRequestDTO.getPostId()));
+        UUID postId = postRequestDTO.getPostId();
+        Optional<PostEntity> existingPost = postRepository.findById(postId);
+
+        existingPost.orElseThrow(() -> new EntityNotFoundException("게시글이 존재하지 않습니다. postId: " + postId));
 
         // 권한이 있는지 확인합니다.
         // TODO: 권한 확인 로직을 추가할 부분
 
-        // 해당 게시글을 삭제합니다.
-        PostEntity deletePost = PostEntity.deleteBuilder()
-                .id(postRequestDTO.getPostId())
-                .build();
+        // 해당 게시글을 삭제처리합니다.
+        postRepository.delete(existingPost.get());
 
-        postRepository.delete(deletePost);
-
-        return new PostResponseDTO.ResponsePost(postRequestDTO.getPostId(),"게시글이 성공적으로 삭제 되었습니다.");
+        return new PostResponseDTO.ResponsePost(postId, "게시글이 성공적으로 삭제처리 되었습니다.");
     }
 
     @Override
