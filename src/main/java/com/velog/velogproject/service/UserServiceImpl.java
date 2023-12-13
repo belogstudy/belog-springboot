@@ -20,6 +20,16 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
+    public UserResponseDTO.Info getUserInfo(UUID userId) {
+
+        UserInfoEntity user = userRepository.findByUserId(userId);
+
+        //UserResponseDTO.Info userDTO
+
+        return null;
+    }
+
+    @Override
     public UserResponseDTO.Login login(String email, String password) {
         try {
             UserInfoEntity user = userRepository.findByEmailAndPassword(email, password);

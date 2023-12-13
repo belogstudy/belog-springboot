@@ -47,8 +47,8 @@ public class PostController {
     }
 
     @Operation(summary = "게시글 삭제", description = "게시글아이디와 사용자아이디를 받아 해당 게시글을 삭제합니다.")
-    @DeleteMapping("/{postId}")
-    public ResponseEntity<PostResponseDTO.ResponsePost> deletePost(@PathVariable UUID postId, @RequestParam UUID userId) {
+    @DeleteMapping("/{postId}/{userId}")
+    public ResponseEntity<PostResponseDTO.ResponsePost> deletePost(@PathVariable UUID postId, @PathVariable UUID userId) {
         PostRequestDTO.DeletePost requestDeletePost = new PostRequestDTO.DeletePost(postId, userId);
         PostResponseDTO.ResponsePost responsePostDelete = postService.deletePost(requestDeletePost);
         return ResponseEntity.ok().body(responsePostDelete);

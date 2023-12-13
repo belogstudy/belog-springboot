@@ -9,6 +9,8 @@ import java.util.UUID;
  */
 public interface UserService {
 
+    UserResponseDTO.Info getUserInfo(UUID userId);
+
     /**
      * 사용자 로그인 인증 서비스
      * @param email : 이메일

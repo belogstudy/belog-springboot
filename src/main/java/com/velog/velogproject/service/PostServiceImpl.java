@@ -33,7 +33,6 @@ public class PostServiceImpl implements PostService{
     @Override
     public PostResponseDTO.Post getPostByPostId(UUID postId) {
         // DB에서 PostId에 해당하는 게시글과 댓글을 가져옵니다.
-        // DB에서 PostId에 해당하는 게시글과 댓글을 가져옵니다.
         Optional<PostEntity> postEntityOptional = postRepository.findById(postId);
         log.info("포스트: {}", postEntityOptional.get());
 
@@ -61,7 +60,6 @@ public class PostServiceImpl implements PostService{
         // List<PostEntity> posts = postRepository.findByUserId(userId);
         return null;
     }
-
 
     @Override
     public List<PostResponseDTO.Post> getPostByTitle(String title) {

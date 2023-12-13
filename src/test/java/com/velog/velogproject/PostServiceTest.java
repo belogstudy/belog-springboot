@@ -11,6 +11,7 @@ import com.velog.velogproject.repository.CommentRepository;
 import com.velog.velogproject.repository.PostRepository;
 import com.velog.velogproject.service.PostService;
 import com.velog.velogproject.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,4 +114,21 @@ public class PostServiceTest {
         log.info("게시글 DTO: {}",PostMapper.toDTO(postEntity, commentEntityList));
 
     }
-}
+
+    @Test @Transactional
+    public void 게시글_삭제테스트() {
+        // 로그인 정보 생성
+        UserResponseDTO.Login user = userService.login("test@example.com", "password");
+
+        // 삭제할 포스트
+        UUID postId = UUID.fromString("00f6bb13-61f4-455c-979f-7ddbe0a21e39");
+
+        PostRequestDTO.DeletePost postRequestDTO = PostRequestDTO.DeletePost.builder()
+                .postId(postId)
+                .userId(user.getUserId())
+                .build();
+
+        // 게시글 삭제
+        postService.deletePost(postRequestDTO);
+
+    }}
