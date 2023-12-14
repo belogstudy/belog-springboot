@@ -54,6 +54,10 @@ public class UserServiceTest {
         UserInfoEntity user = userRepository.findByUserId(userId);
 
         log.info("찾은 유저 정보: {}", user.getUserId());
+
+        UserResponseDTO.Info userDto = userService.getUserInfo(userId);
+
+        log.info("찾은 유저 정보: {}", userDto.getUserId());
     }
 
 }

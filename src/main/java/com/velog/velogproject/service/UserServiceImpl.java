@@ -2,6 +2,7 @@ package com.velog.velogproject.service;
 
 import com.velog.velogproject.dto.response.UserResponseDTO;
 import com.velog.velogproject.entity.UserInfoEntity;
+import com.velog.velogproject.mapper.UserMapper;
 import com.velog.velogproject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,9 +25,7 @@ public class UserServiceImpl implements UserService {
 
         UserInfoEntity user = userRepository.findByUserId(userId);
 
-        //UserResponseDTO.Info userDTO
-
-        return null;
+        return UserMapper.toDTO(user);
     }
 
     @Override

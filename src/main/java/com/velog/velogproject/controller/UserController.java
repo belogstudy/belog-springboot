@@ -31,12 +31,19 @@ public class UserController {
 
     private final UserService userService;
 
+    /** * 유저 정보 API */
+    @Operation(summary = "유저 정보 조회", description = "사용자의 UUID 를 받아 해당 유저의 정보를 가져옵니다.")
+    @GetMapping("/userInfo")
+    public ResponseEntity<UserResponseDTO.Info> userInfo(@PathVariable UUID userId){
+        return ResponseEntity.ok().body(userService.getUserInfo(userId));
+    }
+
     /** * 로그인 API */
     @Operation(summary = "로그인", description = "사용자의 이메일과 패스워드를 받아 로그인을 처리합니다.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "로그인 성공"),
-            @ApiResponse(responseCode = "401", description = "로그인 실패 : 사용자의 입력이 잘못 되었습니다.")
-    })
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "로그인 성공"),
+//            @ApiResponse(responseCode = "401", description = "로그인 실패 : 사용자의 입력이 잘못 되었습니다.")
+//    })
     @PostMapping("/login")
     public ResponseEntity<UserResponseDTO.Login> login(@RequestBody UserRequestDTO.Login loginRequest) {
         String email = loginRequest.getEmail();
@@ -55,10 +62,10 @@ public class UserController {
     }
     /** * 회원가입 API  */
     @Operation(summary = "회원가입", description = "사용자의 정보를 받아 회원가입을 처리합니다.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "회원가입 성공"),
-            @ApiResponse(responseCode = "401", description = "회원가입 실패 : 사용자의 입력이 잘못되었습니다.")
-    })
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "회원가입 성공"),
+//            @ApiResponse(responseCode = "401", description = "회원가입 실패 : 사용자의 입력이 잘못되었습니다.")
+//    })
     @PostMapping("/register")
     public ResponseEntity<UserResponseDTO.Register> register(@RequestBody UserRequestDTO.Register registerRequestDTO) {
         // 클라이언트로부터 전달받은 이메일과 패스워드

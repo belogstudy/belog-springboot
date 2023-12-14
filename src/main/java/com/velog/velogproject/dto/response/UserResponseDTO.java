@@ -1,6 +1,7 @@
 package com.velog.velogproject.dto.response;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,8 @@ import java.util.UUID;
 
 public class UserResponseDTO {
 
+    @Getter
+    @Builder
     public static class Info {
         private UUID userId;
         private String email;
