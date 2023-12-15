@@ -33,7 +33,7 @@ public class UserController {
 
     /** * 유저 정보 API */
     @Operation(summary = "유저 정보 조회", description = "사용자의 UUID 를 받아 해당 유저의 정보를 가져옵니다.")
-    @GetMapping("/userInfo")
+    @GetMapping("/userInfo/{userId}")
     public ResponseEntity<UserResponseDTO.Info> userInfo(@PathVariable UUID userId){
         return ResponseEntity.ok().body(userService.getUserInfo(userId));
     }
