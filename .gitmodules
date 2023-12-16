@@ -1,0 +1,3 @@
+[submodule "belog-springboot-secret"]
+	path = belog-springboot-secret
+	url = https://github.com/belogstudy/belog-springboot-secret

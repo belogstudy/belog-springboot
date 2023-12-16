@@ -35,7 +35,7 @@ public class PostServiceTest {
     private UserService userService;
 
 
-    @Test
+    @Test @Transactional
     public void 게시글생성_테스트() {
         int Count = 40;  // 생성할 게시글 수
 
@@ -74,7 +74,7 @@ public class PostServiceTest {
 //        postService.createComment()
 //    }
 
-    @Test
+    @Test @Transactional
     public void 포스트검색(){
         UUID postId = UUID.fromString("532df4df-c29a-4815-92e8-be18e7ea032d");
         Optional<PostEntity> post = postRepository.findById(postId);
@@ -82,7 +82,7 @@ public class PostServiceTest {
         log.info("포스트: {}", post.get());
     }
 
-    @Test
+    @Test @Transactional
     public void 댓글검색(){
         UUID postId = UUID.fromString("532df4df-c29a-4815-92e8-be18e7ea032d");
         PostEntity post = PostEntity.builder()
@@ -93,7 +93,7 @@ public class PostServiceTest {
         log.info("댓글 리스트 : {}", entity.toString());
     }
 
-    @Test
+    @Test @Transactional
     public void 게시글_가져오기(){
         UUID postId = UUID.fromString("532df4df-c29a-4815-92e8-be18e7ea032d");
 
