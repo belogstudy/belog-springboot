@@ -38,8 +38,8 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         username: ${{ secrets.SSH_USERNAME }}
         password: ${{ secrets.SSH_PASSWORD }}  # Secrets에 저장된 SSH 패스워드 사용
+        source: "build/libs/*.jar"  # Adjust the source path based on your project structure
+        target: "~/"
         script: |
-          # JAR 파일을 서버로 전송
-          scp -P ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USERNAME }}@diligentp.com:"build/libs/*.jar" ~/
           # deploy.sh 스크립트 실행
           curl -sSL https://raw.githubusercontent.com/belogstudy/belog-springboot/main/.github/workflows/deploy.sh | bash
