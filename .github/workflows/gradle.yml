@@ -52,7 +52,7 @@ jobs:
           host: ${{ secrets.SSH_SERVER }}
           port: ${{ secrets.SSH_PORT }}
           username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          password: ${{ secrets.SSH_PASSWORD }}
           source: "/home/runner/work/belog-springboot/belog-springboot/*.jar"
           target: "~/"
 
