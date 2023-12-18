@@ -16,7 +16,7 @@ import java.util.UUID;
  * */
 @Entity
 @NoArgsConstructor @Getter
-@AllArgsConstructor @Builder
+@AllArgsConstructor
 @Table(name = "userInfo", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class UserInfoEntity {
 
