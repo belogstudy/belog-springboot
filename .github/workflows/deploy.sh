@@ -1,47 +1,19 @@
 #!/bin/bash
 
 # 의존성 패키지 확인
-if ! command -v git &> /dev/null; then
-    echo "git이 설치되어 있지 않습니다."
-    exit 1
-fi
-
-# JRE 17 설치 확인 및 설치
 if ! command -v java &> /dev/null; then
     echo "Java 17 (JRE)이 설치되어 있지 않습니다."
     exit 1
 fi
 
-project_dir="belog-springboot"
-store_url="https://github.com/belogstudy/belog-springboot.git"
 dockerfile_path="$HOME/$project_dir/Dockerfile"
+jar_path="$HOME/velogProject-0.0.1-SNAPSHOT.jar"
 
-# 프로젝트 가져오기
-echo "프로젝트의 변경사항을 확인중입니다."
-# 프로젝트 디렉토리가 이미 존재하는지 확인
-if [ -d "$project_dir" ]; then
-    # 디렉토리가 존재하면 업데이트
-    cd "$project_dir" || exit 1
-    git pull
-else
-    # 디렉토리가 존재하지 않으면 클론
-    git clone "$store_url" || exit 1
-    cd "$project_dir" || exit 1  # 클론 후 프로젝트 폴더로 이동
+# JAR 파일 확인
+if [ ! -f "$jar_path" ]; then
+    echo "에러: JAR 파일이 $jar_path 에 존재하지 않습니다."
+    exit 1
 fi
-
-# 서브모듈 가져오기
-echo "설정파일을 변경사항을 확인중입니다."
-if [ -d "$project_dir/belog-springboot-secret" ]; then
-    echo "설정 파일을 업데이트합니다."
-    rm -rf "$project_dir/belog-springboot-secret"
-fi
-git clone https://$ACTION_TOKEN@github.com/belogstudy/belog-springboot-secret.git
-mv belog-springboot-secret/application.yml "$project_dir/belog-springboot-secret"
-
-# 프로젝트 빌드
-echo "프로젝트를 빌드합니다."
-chmod +x gradlew
-./gradlew bootJar || { echo "프로젝트 빌드에 실패했습니다."; exit 1; }
 
 # 도커 컨테이너 배포
 echo "도커 컨테이너에 배포합니다."
