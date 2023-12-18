@@ -33,11 +33,20 @@ jobs:
 
     - name: Deploy to diligentp.com
       uses: appleboy/ssh-action@master
+      env:
+        ACTION_TOKEN: ${{ secrets.ACTION_TOKEN }}
       with:
         host: diligentp.com
         port: ${{ secrets.SSH_PORT }}
         username: ${{ secrets.SSH_USERNAME }}
         password: ${{ secrets.SSH_PASSWORD }}  # Secrets에 저장된 SSH 패스워드 사용
         script: |
+          # deploy.sh 스크립트를 로컬에 저장
+          deploy_sh_url="https://raw.githubusercontent.com/belogstudy/belog-springboot/main/.github/workflows/deploy.sh"
+          curl -sSL $deploy_sh_url -o deploy.sh
+  
           # deploy.sh 스크립트 실행
-          curl -sSL https://raw.githubusercontent.com/belogstudy/belog-springboot/main/.github/workflows/deploy.sh | bash
+          bash deploy.sh $ACTION_TOKEN
+          
+          # deploy.sh 실행 후 스크립트를 삭제
+          rm deploy.sh
