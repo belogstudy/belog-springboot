@@ -47,14 +47,14 @@ jobs:
           name: artifact
 
       - name: SCP artifact transfer
-        run: |
-          mkdir -p ~/.ssh                              # 디렉토리 생성
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key  # SSH 키를 파일에 저장
-          chmod 600 ~/.ssh/deploy_key                  # 키 파일의 권한을 설정
-          ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_SERVER }} >> ~/.ssh/known_hosts
-          scp -i ~/.ssh/deploy_key -P ${{ secrets.SSH_PORT }} -v *.jar ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }}:~
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_SERVER }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "build/libs/*.jar"
+          target: "~/"
 
       - name: Deploy to Prod Server
         uses: appleboy/ssh-action@master
