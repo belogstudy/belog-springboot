@@ -14,7 +14,6 @@ fi
 
 project_dir="belog-springboot"
 store_url="https://github.com/belogstudy/belog-springboot.git"
-submodule_url="https://$ACTION_TOKEN@github.com/belogstudy/belog-springboot-secret.git"
 dockerfile_path="$HOME/$project_dir/Dockerfile"
 
 # 프로젝트 가져오기
@@ -36,7 +35,7 @@ if [ -d "$project_dir/belog-springboot-secret" ]; then
     echo "설정 파일을 업데이트합니다."
     rm -rf "$project_dir/belog-springboot-secret"
 fi
-git clone "$submodule_url"
+git clone https://$ACTION_TOKEN@github.com/belogstudy/belog-springboot-secret.git
 mv belog-springboot-secret/application.yml "$project_dir/belog-springboot-secret"
 
 # 프로젝트 빌드
