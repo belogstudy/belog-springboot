@@ -46,14 +46,13 @@ jobs:
         with:
           name: artifact
 
-      - name: Ensure ~/.ssh directory exists
-        run: mkdir -p ~/.ssh
-
-      - name: Add host key to known_hosts
-        run: ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_SERVER }} >> ~/.ssh/known_hosts
-
       - name: SCP artifact transfer
-        run: scp -P ${{ secrets.SSH_PORT }} -v *.jar ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }}:~
+        run: |
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key  # SSH 키를 파일에 저장
+          chmod 600 ~/.ssh/deploy_key                  # 키 파일의 권한을 설정
+          scp -i ~/.ssh/deploy_key -P ${{ secrets.SSH_PORT }} -v *.jar ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }}:~
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Deploy to Prod Server
         uses: appleboy/ssh-action@master
