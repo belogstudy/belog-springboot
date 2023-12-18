@@ -53,7 +53,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "build/libs/*.jar"
+          source: "/home/runner/work/belog-springboot/belog-springboot/*.jar"
           target: "~/"
 
       - name: Deploy to Prod Server
