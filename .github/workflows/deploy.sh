@@ -24,7 +24,7 @@ docker rmi velog-spring-app-image || true  # 이미지가 없을 경우 에러�
 # 새로운 이미지를 빌드하고 컨테이너를 실행합니다.
 echo "도커 이미지를 빌드합니다."
 curl -O https://raw.githubusercontent.com/belogstudy/belog-springboot/main/Dockerfile
-docker build -t velog-spring-app-image -f "$dockerfile_path" . || { echo "도커 이미지 빌드에 실패했습니다."; exit 1; }
+docker build -t velog-spring-app-image . || { echo "도커 이미지 빌드에 실패했습니다."; exit 1; }
 echo "도커 컨테이너를 실행합니다."
 docker run --name velog-spring-app -p 80:8080 -d velog-spring-app-image
 
