@@ -47,7 +47,7 @@ jobs:
           name: artifact
 
       - name: SCP artifact transfer
-        run: scp -P ${{ secrets.SSH_PORT }} -v *.jar ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }}:~
+        run: scp -o StrictHostKeyChecking=yes -P ${{ secrets.SSH_PORT }} -v *.jar ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }}:~
 
       - name: Deploy to Prod Server
         uses: appleboy/ssh-action@master
