@@ -46,10 +46,14 @@ jobs:
         with:
           name: artifact
 
+      - name: Ensure ~/.ssh directory exists
+        run: mkdir -p ~/.ssh
+
+      - name: Add host key to known_hosts
+        run: ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_SERVER }} >> ~/.ssh/known_hosts
+
       - name: SCP artifact transfer
-        run: |
-          ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_SERVER }} >> ~/.ssh/known_hosts
-          scp -P ${{ secrets.SSH_PORT }} -v *.jar ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }}:~
+        run: scp -P ${{ secrets.SSH_PORT }} -v *.jar ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }}:~
 
       - name: Deploy to Prod Server
         uses: appleboy/ssh-action@master
