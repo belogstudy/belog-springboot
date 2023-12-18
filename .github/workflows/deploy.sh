@@ -14,6 +14,7 @@ fi
 
 project_dir="belog-springboot"
 store_url="https://github.com/belogstudy/belog-springboot.git"
+dockerfile_path="$HOME/$project_dir/Dockerfile"
 
 # 프로젝트 가져오기
 echo "프로젝트의 변경사항을 확인중입니다."
@@ -35,9 +36,17 @@ chmod +x gradlew
 
 # 도커 컨테이너 배포
 echo "도커 컨테이너에 배포합니다."
-docker stop velog-spring-app
-docker rm velog-spring-app
-docker rmi velog-spring-app-image || true  # 이미지가 없는 경우를 고려하여 에러를 무시
 
-docker build -t velog-spring-app-image .  # Dockerfile의 경로를 지정
+# 이전에 실행 중이던 컨테이너를 중지하고 삭제합니다.
+echo "이전 컨테이너를 중지하고 삭제합니다."
+docker stop velog-spring-app || true  # 컨테이너가 없을 경우 에러를 무시
+docker rm velog-spring-app || true    # 컨테이너가 없을 경우 에러를 무시
+
+# 이전에 생성된 이미지를 삭제합니다.
+echo "이전 이미지를 삭제합니다."
+docker rmi velog-spring-app-image || true  # 이미지가 없을 경우 에러를 무시
+
+# 새로운 이미지를 빌드하고 컨테이너를 실행합니다.
+docker build -t velog-spring-app-image -f "$dockerfile_path" "$HOME/$project_dir"  # Dockerfile의 경로를 홈 디렉토리 내 프로젝트 경로로 수정
 docker run --name velog-spring-app -p 80:8080 -d velog-spring-app-image
+
