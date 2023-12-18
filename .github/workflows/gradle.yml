@@ -31,15 +31,31 @@ jobs:
       with:
         arguments: build
 
-    - name: Deploy to diligentp.com
-      uses: appleboy/ssh-action@master
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
       with:
-        host: diligentp.com
-        port: ${{ secrets.SSH_PORT }}
-        username: ${{ secrets.SSH_USERNAME }}
-        password: ${{ secrets.SSH_PASSWORD }}  # Secrets에 저장된 SSH 패스워드 사용
-        source: "build/libs/*.jar"  # Adjust the source path based on your project structure
-        target: "~/"
-        script: |
-          # deploy.sh 스크립트 실행
-          curl -sSL https://raw.githubusercontent.com/belogstudy/belog-springboot/main/.github/workflows/deploy.sh | bash
+        name: artifact
+        path: build/libs/*.jar
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: artifact
+
+      - name: SCP artifact transfer
+        run: scp *.jar ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }}:~/
+
+      - name: Deploy to Prod Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_SERVER }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            # deploy.sh 스크립트 실행
+            curl -sSL https://raw.githubusercontent.com/belogstudy/belog-springboot/main/.github/workflows/deploy.sh | bash
