@@ -31,7 +31,7 @@ fi
 # 프로젝트 빌드
 echo "프로젝트를 빌드합니다."
 chmod +x gradlew
-./gradlew bootJar || exit 1
+./gradlew bootJar || { echo "프로젝트 빌드에 실패했습니다."; exit 1; }
 
 # 도커 컨테이너 배포
 echo "도커 컨테이너에 배포합니다."
