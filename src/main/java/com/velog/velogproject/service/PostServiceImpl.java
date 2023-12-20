@@ -13,6 +13,8 @@ import com.velog.velogproject.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -33,6 +35,17 @@ public class PostServiceImpl implements PostService{
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
 
+
+    @Override
+    public List<PostResponseDTO.Post> getPostRange(int offset, int limit) {
+        Pageable pageable = PageRequest.of(offset / limit, limit);
+
+        List<PostEntity> posts = postRepository.findByOrderByCreatedAtDesc(pageable);
+
+        return posts.stream()
+                .map(PostMapper::toDTO)
+                .collect(Collectors.toList());
+    }
     @Override
     public PostResponseDTO.Post getPostByPostId(UUID postId) {
         // DB에서 PostId에 해당하는 게시글과 댓글을 가져옵니다.
@@ -61,6 +74,7 @@ public class PostServiceImpl implements PostService{
                 .map(PostMapper::toDTO)
                 .collect(Collectors.toList());
     }
+
 
     @Override
     public List<PostResponseDTO.Post> getPostByTitle(String title) {

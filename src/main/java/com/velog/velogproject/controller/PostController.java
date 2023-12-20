@@ -25,6 +25,17 @@ import java.util.UUID;
 public class PostController {
     private final PostService postService;
 
+    @Operation(summary = "전체 게시글 범위 조회 - 최신순", description = "범위(offset, limit)를 받아 해당 범위에 속한 게시글 리스트를 조회합니다.<br>" +
+            "offset => index 번호 (시작 번호)<br>" +
+            "limit => 게시글 갯수")
+    @GetMapping("range/{offset}/{limit}")
+    public ResponseEntity<List<PostResponseDTO.Post>> getPostRange(@PathVariable int offset, @PathVariable int limit){
+        return ResponseEntity.ok().body(
+                postService.getPostRange(offset, limit)
+        );
+    }
+
+
     @Operation(summary = "게시글 목록 조회 - 유저아이디", description = "유저아이디를 받아 유저가 작성한 모든 게시글을 조회합니다.")
     @GetMapping("user/{userId}")
     public ResponseEntity<List<PostResponseDTO.Post>> getPostByUserId(@PathVariable UUID userId) {

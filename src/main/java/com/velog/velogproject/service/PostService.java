@@ -13,10 +13,12 @@ public interface PostService {
 
     /**
      * 게시글 조회 서비스
+     * @getPostRange : 게시글의 범위를 받아 해당범위의 게시들 리스트를 반환합니다.
      * @getPostByPostId : 해당 게시글을 조회합니다.
      * @getPostByUserId : 사용자가 작성한 모든 게시글을 조회합니다.
      * @getPostByTitle : 사용자가 검색한 문자열이 포함되어 있는 모든 게시글을 조회합니다.
      */
+    List<PostResponseDTO.Post> getPostRange(int offset, int limit);
     PostResponseDTO.Post getPostByPostId(UUID postId);
     List<PostResponseDTO.Post> getPostByUserId(UUID userId);
     List<PostResponseDTO.Post> getPostByTitle(String title);
