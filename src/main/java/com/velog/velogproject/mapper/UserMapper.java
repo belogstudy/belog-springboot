@@ -12,7 +12,14 @@ public class UserMapper {
                 .profile(user.getProfile())
                 .profileImage(user.getProfileImage())
                 .profileName(user.getProfileName())
+                .facebook(user.getFacebook())
+                .home(user.getHome())
+                .twitter(user.getTwitter())
+                .github(user.getGithub())
+                .velogTitle(user.getVelogTitle())
+                .aboutMe(user.getAboutMe())
+                .snsMail(user.getSnsMail())
+                .likePosts(user.getLikePosts())
                 .build();
     }
-
 }

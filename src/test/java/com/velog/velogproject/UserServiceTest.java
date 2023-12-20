@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.UUID;
 
 @SpringBootTest @Slf4j
+@Transactional
 public class UserServiceTest {
 
     @Autowired
@@ -38,7 +39,7 @@ public class UserServiceTest {
         );
     }
 
-    @Test @Transactional
+    @Test
     public void 회원탈퇴_테스트() {
         UserResponseDTO.Login user = userService.login(
                 "test@example.com",
@@ -53,11 +54,11 @@ public class UserServiceTest {
         UUID userId = UUID.fromString("e20ac609-f9b7-48a4-8d48-9d4ca4876816");
         UserInfoEntity user = userRepository.findByUserId(userId);
 
-        log.info("찾은 유저 정보: {}", user.getUserId());
+        log.info("찾은 유저 정보 DAO : {}", user.getUserId());
 
         UserResponseDTO.Info userDto = userService.getUserInfo(userId);
 
-        log.info("찾은 유저 정보: {}", userDto.getUserId());
+        log.info("찾은 유저 정보 DTO: {}", userDto.toString());
     }
 
 }

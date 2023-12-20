@@ -1,10 +1,7 @@
 package com.velog.velogproject.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDateTime;
@@ -15,8 +12,8 @@ import java.util.UUID;
  * Velog의 userInfo 테이블을 매핑하는 Entitiy 클래스 입니다.
  * */
 @Entity
-@NoArgsConstructor @Getter
-@AllArgsConstructor
+@Getter
+@NoArgsConstructor @AllArgsConstructor
 @Table(name = "userInfo", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class UserInfoEntity {
 

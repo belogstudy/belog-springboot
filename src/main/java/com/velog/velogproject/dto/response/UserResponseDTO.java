@@ -1,16 +1,12 @@
 package com.velog.velogproject.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class UserResponseDTO {
 
-    @Getter
+public class UserResponseDTO {
+    @Getter @ToString
     @Builder
     public static class Info {
         private UUID userId;
@@ -18,16 +14,15 @@ public class UserResponseDTO {
         private String profile;
         private String profileImage;
         private String profileName;
-//        private String facebook;
-//        private String home;
-//        private String twitter;
-//        private String github;
-//        private String velogTitle;
-//        private String aboutMe;
-//        private String snsMail;
-//        private String likePosts;
+        private String facebook;
+        private String home;
+        private String twitter;
+        private String github;
+        private String velogTitle;
+        private String aboutMe;
+        private String snsMail;
+        private String likePosts;
     }
-
     @Getter
     @Setter
     public static class Login {
