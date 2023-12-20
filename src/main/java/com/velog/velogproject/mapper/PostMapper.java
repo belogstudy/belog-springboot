@@ -28,6 +28,22 @@ public class PostMapper {
                 .build();
     }
 
+    public static PostResponseDTO.Post toDTO(PostEntity postEntity) {
+        return PostResponseDTO.Post.builder()
+                .postId(postEntity.getId())
+                .title(postEntity.getTitle())
+                .subTitle(postEntity.getSubTitle())
+                .contents(postEntity.getContents())
+                .url(postEntity.getUrl())
+                .publicStatus(postEntity.getPublicStatus())
+                .description(postEntity.getDescription())
+                .createdAt(postEntity.getCreatedAt())
+                .updatedAt(postEntity.getUpdatedAt())
+                .likes(postEntity.getLikes())
+                .userId(postEntity.getUserId())
+                .build();
+    }
+
     private static List<PostResponseDTO.Comment> mapCommentEntitiesToDTO(List<CommentEntity> commentEntities) {
         return commentEntities.stream()
                 .map(commentEntity -> PostResponseDTO.Comment.builder()

@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * 게시글 서비스 구현
@@ -51,9 +52,14 @@ public class PostServiceImpl implements PostService{
     @Override
     public List<PostResponseDTO.Post> getPostByUserId(UUID userId) {
         // DB 에서 UserId 가 일치하는 모든 게시글 리스트를 가져옵니다.
+        UserInfoEntity author = userRepository.findByUserId(userId);
+
         // 받아온 게시글 리스트를 DTO 로 변환하여 반환합니다.
-        // List<PostEntity> posts = postRepository.findByUserId(userId);
-        return null;
+        List<PostEntity> posts = postRepository.findByUserId(author);
+
+        return posts.stream()
+                .map(PostMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -23,6 +24,14 @@ import java.util.UUID;
 @RequestMapping("/post")
 public class PostController {
     private final PostService postService;
+
+    @Operation(summary = "게시글 목록 조회 - 유저아이디", description = "유저아이디를 받아 유저가 작성한 모든 게시글을 조회합니다.")
+    @GetMapping("user/{userId}")
+    public ResponseEntity<List<PostResponseDTO.Post>> getPostByUserId(@PathVariable UUID userId) {
+        List<PostResponseDTO.Post> postsDTO = postService.getPostByUserId(userId);
+        return ResponseEntity.ok().body(postsDTO);
+    }
+
     
     @Operation(summary = "게시글 조회", description = "게시글아이디를 받아 해당 게시글을 조회합니다.")
     @GetMapping("/{postId}")

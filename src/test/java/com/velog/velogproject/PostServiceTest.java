@@ -3,9 +3,11 @@ package com.velog.velogproject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.velog.velogproject.dto.request.PostRequestDTO;
+import com.velog.velogproject.dto.response.PostResponseDTO;
 import com.velog.velogproject.dto.response.UserResponseDTO;
 import com.velog.velogproject.entity.CommentEntity;
 import com.velog.velogproject.entity.PostEntity;
+import com.velog.velogproject.entity.UserInfoEntity;
 import com.velog.velogproject.mapper.PostMapper;
 import com.velog.velogproject.repository.CommentRepository;
 import com.velog.velogproject.repository.PostRepository;
@@ -13,6 +15,7 @@ import com.velog.velogproject.service.PostService;
 import com.velog.velogproject.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +26,7 @@ import java.util.UUID;
 
 @SpringBootTest
 @Slf4j
+@DisplayName("게시글 API 테스트")
 public class PostServiceTest {
 
     @Autowired
@@ -118,4 +122,38 @@ public class PostServiceTest {
 //
 //    }
 
+    @Test @Transactional
+    @DisplayName("게시글 조회 - 유저가 작성한 모든 게시글 가져오기")
+    public void getPostByUserIdTest() {
+        // 1. 유저 로그인
+        UserResponseDTO.Login dto = userService.login("test@test.com", "password");
+
+        // 2. 10개의 포스트 생성
+        int Count = 10;
+        for (int i = 0; i < Count; i++) {
+            PostRequestDTO.CreatePost request = PostRequestDTO.CreatePost.builder()
+                    .title("제목" + i)
+                    .subTitle("부제목" + i)
+                    .contents("내용" + i)
+                    .url("url" + i)
+                    .publicStatus(true) // 예시로 모든 포스트를 공개로 설정
+                    .description("설명" + i)
+                    .userId(dto.getUserId()) // 로그인 정보에서 사용자 정보 가져오기 (가정)
+                    .build();
+
+            // 생성한 포스트를 저장
+            postService.createPost(request);
+        }
+
+        // 3. 해당 유저의 ID를 통해 게시글 조회
+        UserInfoEntity user = new UserInfoEntity(dto.getUserId());
+        List<PostEntity> posts = postRepository.findByUserId(user);
+
+        log.info("포스트 : {}",posts);
+        log.info("포스트 갯수: {}",posts.size());
+
+        // 4. DTO 확인
+        List<PostResponseDTO.Post> postsDTO = postService.getPostByUserId(dto.getUserId());
+        log.info("유저가 작성한 게시글 목록: {}",postsDTO);
+    }
 }
