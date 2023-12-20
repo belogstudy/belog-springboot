@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class PostMapper {
 
-    public static PostResponseDTO.Post toDTO(PostEntity postEntity, List<CommentEntity> comments) {
+    public static PostResponseDTO.Post toDTO(PostEntity postEntity, List<CommentEntity> comments, UserInfoEntity author) {
         return PostResponseDTO.Post.builder()
                 .postId(postEntity.getId())
                 .title(postEntity.getTitle())
@@ -24,6 +24,7 @@ public class PostMapper {
                 .updatedAt(postEntity.getUpdatedAt())
                 .likes(postEntity.getLikes())
                 .userId(postEntity.getUserId())
+                .author(UserMapper.toDTO(author))
                 .build();
     }
 

@@ -1,9 +1,6 @@
 package com.velog.velogproject.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,7 +8,7 @@ import java.util.UUID;
 
 @Setter
 public class PostResponseDTO {
-    @Getter
+    @Getter @ToString
     @AllArgsConstructor
     @Builder
     public static class Post {
@@ -30,6 +27,8 @@ public class PostResponseDTO {
         private int likes;
 
         private UUID userId;
+
+        private UserResponseDTO.Info author;
     }
 
     @Getter

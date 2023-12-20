@@ -97,22 +97,7 @@ public class PostServiceTest {
     public void 게시글_가져오기(){
         UUID postId = UUID.fromString("532df4df-c29a-4815-92e8-be18e7ea032d");
 
-        // DB에서 PostId에 해당하는 게시글과 댓글을 가져옵니다.
-        Optional<PostEntity> postEntityOptional = postRepository.findById(postId);
-        log.info("포스트: {}", postEntityOptional.get());
-
-        PostEntity post = PostEntity.builder()
-                .id(postId)
-                .build();
-        List<CommentEntity> commentEntityList = commentRepository.findByPostId(post);
-        log.info("댓글 리스트 : {}", commentEntityList.toString());
-
-
-        // DB에서 가져온 PostEntity를 PostResponseDTO.Post로 변환하여 반환합니다.
-        PostEntity postEntity = postEntityOptional.get();
-
-        log.info("게시글 DTO: {}",PostMapper.toDTO(postEntity, commentEntityList));
-
+        log.info("포스트 정보: {}",postService.getPostByPostId(postId).toString());
     }
 
 //    @Test @Transactional
