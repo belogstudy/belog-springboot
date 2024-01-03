@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
-@Tag(name = "테스트 API", description = "임시로 사용하는 API 입니다.")
+@Tag(name = "테스트 API", description = "임시로 사용하는 API 입니다..")
 public class TestController {
 
     private final PostRepository postRepository;
