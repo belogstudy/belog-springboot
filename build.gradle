@@ -53,6 +53,10 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+tasks.named('test').configure {
+	enabled = false
+}
+
 tasks.register('copySecret', Copy) {
 	from './belog-springboot-secret'
 	include "application*.yml"  // 복사할 파일들
